@@ -1,0 +1,29 @@
+{
+    "name": "maer/kernel",
+    "description": "A small framework",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Magnus Eriksson",
+            "email": "mange@reloop.se"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "maer/config": "^2.0",
+        "maer/router": "^1.5",
+        "symfony/http-foundation": "^5.1",
+        "illuminate/container": "^8.13",
+        "league/plates": "^3.3",
+        "maer/validator": "^1.0",
+        "mrjgreen/database": "^2.5",
+        "maer/entity": "^2.0",
+        "cocur/slugify": "^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kernel\\": "src/"
+        }
+    }
+}
