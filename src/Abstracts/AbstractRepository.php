@@ -27,9 +27,9 @@ abstract class AbstractBaseRepo
     /**
      * Entity to convert into
      *
-     * @var AbstractEntity
+     * @var string
      */
-    protected AbstractEntity $entity;
+    protected string $entity;
 
 
     /**
