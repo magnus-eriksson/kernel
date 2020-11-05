@@ -3,10 +3,6 @@ declare(strict_types=1);
 
 namespace Kernel\Contracts;
 
-use Database\Connection;
-use Database\Query\Builder;
-use DateTime;
-use DateTimeZone;
 use Kernel\Abstracts\AbstractEntity;
 use Kernel\Entities\Pagination;
 use Maer\Entity\Collection;
