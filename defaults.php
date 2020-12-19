@@ -5,7 +5,7 @@ return [
      * Date & time settings
      */
     'dateTime' => [
-        'timezone' => 'Europe/UTC',
+        'timezone' => 'UTC',
     ],
 
     /**
