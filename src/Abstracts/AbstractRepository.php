@@ -10,7 +10,7 @@ use DateTimeZone;
 use Kernel\Entities\Pagination;
 use Maer\Entity\Collection;
 
-abstract class AbstractBaseRepo
+abstract class AbstractRepository
 {
     /**
      * @var Connection $db
