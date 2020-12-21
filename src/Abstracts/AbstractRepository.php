@@ -50,11 +50,11 @@ abstract class AbstractRepository
      */
     public function insert(AbstractEntity $item): ?AbstractEntity
     {
-        if ($item->has('createdAt')) {
+        if ($item->has('createdAt') && empty($item->createdAt)) {
             $item->createdAt = $this->getDate();
         }
 
-        if ($item->has('updatedAt')) {
+        if ($item->has('updatedAt') && empty($item->updatedAt)) {
             $item->updatedAt = $this->getDate();
         }
 
