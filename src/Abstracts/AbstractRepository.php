@@ -38,6 +38,8 @@ abstract class AbstractRepository
     public function __construct(Connection $db)
     {
         $this->db = $db;
+
+        die('test');
     }
 
 
