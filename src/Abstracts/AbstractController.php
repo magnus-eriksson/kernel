@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Kernel\Abstracts;
 
 use Illuminate\Container\Container;
+use Kernel\Entities\JsonResponseEntity;
 use Kernel\Kernel;
 use Kernel\Routing\Router;
 use League\Plates\Engine;
@@ -51,7 +52,7 @@ abstract class AbstractController
      *
      * @return RedirectResponse
      */
-    public function redirect(string $url, int $status = 302, array $headers = []): RedirectResponse
+    protected function redirect(string $url, int $status = 302, array $headers = []): RedirectResponse
     {
         return static::$kernel->redirect($url, $status, $headers);
     }
@@ -66,7 +67,7 @@ abstract class AbstractController
      *
      * @return string|null
      */
-    public function getRoute(string $name, array $args = [], bool $prependBaseUrl = false): ?string
+    protected function getRoute(string $name, array $args = [], bool $prependBaseUrl = false): ?string
     {
         return static::$kernel->router->getRoute($name, $args, $prependBaseUrl);
     }
@@ -82,7 +83,7 @@ abstract class AbstractController
      *
      * @return RedirectResponse
      */
-    public function redirectToRoute(string $name, array $args = [], int $status = 302, array $headers = []): RedirectResponse
+    protected function redirectToRoute(string $name, array $args = [], int $status = 302, array $headers = []): RedirectResponse
     {
         return static::$kernel->redirectToRoute($name, $args, $status, $headers);
     }
@@ -96,7 +97,7 @@ abstract class AbstractController
      *
      * @return string
      */
-    public function render(string $template, array $data = []): string
+    protected function render(string $template, array $data = []): string
     {
         return static::$kernel->render($template, $data);
     }
@@ -110,9 +111,20 @@ abstract class AbstractController
      *
      * @return TestSuite
      */
-    public function validate(array $data, array $rules): TestSuite
+    protected function validate(array $data, array $rules): TestSuite
     {
         return static::$kernel->validator->make($data, $rules);
+    }
+
+
+    /**
+     * Get a new json response entity instance
+     *
+     * @return JsonResponseEntity
+     */
+    protected function jsonResponseEntity(): JsonResponseEntity
+    {
+        return new JsonResponseEntity;
     }
 
 
