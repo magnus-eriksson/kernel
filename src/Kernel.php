@@ -7,6 +7,7 @@ use Database\Connection;
 use Database\Connectors\ConnectionFactory;
 use Illuminate\Container\Container;
 use Kernel\Abstracts\AbstractController;
+use Kernel\Entities\JsonResponseEntity;
 use Kernel\Routing\Router;
 use Kernel\Security\Csrf;
 use Kernel\Utils\Slugify;
@@ -14,6 +15,7 @@ use League\Plates\Engine;
 use Maer\Config\Config;
 use Maer\Validator\TestSuite;
 use Maer\Validator\Validator;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -266,13 +268,28 @@ class Kernel
 
 
     /**
+     * Get the raw response
+     *
+     * @return mixed
+     */
+    public function getRawResponse(string $method = null, string $path = null)
+    {
+        return $this->router->dispatch($method, $path);
+    }
+
+
+    /**
      * Execute the router and get started
      *
      * @return void
      */
-    public function start(): void
+    public function start(string $method = null, string $path = null): void
     {
-        $response = $this->router->dispatch();
+        $response = $this->getRawResponse($method, $path);
+
+        if ($response instanceof JsonResponseEntity) {
+            $response = new JsonResponse($response, http_response_code());
+        }
 
         if ($response instanceof Response === false) {
             $response = new Response($response, http_response_code());
