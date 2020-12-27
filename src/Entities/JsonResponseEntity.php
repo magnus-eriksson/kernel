@@ -180,6 +180,17 @@ class JsonResponseEntity implements JsonSerializable
 
 
     /**
+     * If cast as a string, return it as stringified json
+     *
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return json_encode($this->jsonSerialize());
+    }
+
+
+    /**
      * Reset all values
      *
      * @return JsonResponseEntity
