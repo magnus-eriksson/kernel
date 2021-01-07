@@ -102,6 +102,9 @@ class JsonResponseEntity implements JsonSerializable
     {
         $this->errors = array_merge($this->errors, $errors);
 
+        // Since we got an error, set success to false
+        $this->setSuccess(false);
+
         return $this;
     }
 
@@ -121,6 +124,9 @@ class JsonResponseEntity implements JsonSerializable
         } else {
             $this->errors[$index] = $error;
         }
+
+        // Since we got an error, set success to false
+        $this->setSuccess(false);
 
         return $this;
     }
