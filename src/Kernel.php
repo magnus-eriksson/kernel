@@ -11,6 +11,7 @@ use Kernel\Entities\JsonResponseEntity;
 use Kernel\Routing\Router;
 use Kernel\Security\Csrf;
 use Kernel\Utils\Slugify;
+use Kernel\Views\Helpers;
 use League\Plates\Engine;
 use Maer\Config\Config;
 use Maer\Validator\TestSuite;
@@ -111,7 +112,7 @@ class Kernel
          */
         $this->ioc->singleton(Engine::class, function ($ioc): Engine {
             $engine = new Engine($ioc->config->get('views.path'));
-            $engine->registerFunction('route', fn (string $name, array $args = []) => $this->router->getRoute($name, $args));
+            $engine->loadExtension($ioc->make(Helpers::class));
 
             return $engine;
         });
