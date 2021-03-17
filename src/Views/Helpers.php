@@ -30,6 +30,6 @@ class Helpers implements ExtensionInterface
     public function register(Engine $engine)
     {
         $engine->registerFunction('route', [$this->kernel->router, 'getRoute']);
-        $engine->registerFunction('csrfToken', [$this->csrf, 'get']);
+        $engine->registerFunction('csrfToken', [$this->kernel->csrf, 'get']);
     }
 }
