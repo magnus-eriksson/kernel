@@ -7,10 +7,11 @@ use Database\Connection;
 use Database\Query\Builder;
 use DateTime;
 use DateTimeZone;
+use Kernel\Contracts\RepositoryInterface;
 use Kernel\Entities\Pagination;
 use Maer\Entity\Collection;
 
-abstract class AbstractRepository
+abstract class AbstractRepository implements RepositoryInterface
 {
     /**
      * @var Connection $db
