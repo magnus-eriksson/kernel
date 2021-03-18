@@ -55,6 +55,11 @@ class Kernel
         $this->ioc->alias(Container::class, 'ioc');
 
         /**
+         * Kernel
+         */
+        $this->ioc->singleton(Kernel::class, fn (): Kernel => $this);
+
+        /**
          * Config
          */
         $configs = [__DIR__ . '/../defaults.php', ...$configs];
