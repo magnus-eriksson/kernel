@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Kernel;
 
+use Closure;
 use Database\Connection;
 use Database\Connectors\ConnectionFactory;
 use Illuminate\Container\Container;
@@ -168,6 +169,22 @@ class Kernel
     public function config($key = null, $fallback = null)
     {
         return $this->config->get($key, $fallback);
+    }
+
+
+    /**
+     * Add routes
+     *
+     * @param callable $callback
+     * @param array $groupSettings
+     *
+     * @return self
+     */
+    public function addRoutes(callable $callback, array $groupSettings = []): Kernel
+    {
+        $this->router->group($groupSettings, $callback);
+
+        return $this;
     }
 
 
