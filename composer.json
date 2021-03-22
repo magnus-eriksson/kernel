@@ -21,9 +21,6 @@
         "maer/entity": "^2.0",
         "cocur/slugify": "^4.0"
     },
-    "require-dev": {
-        "robmorgan/phinx": "^0.12.6"
-    },
     "autoload": {
         "psr-4": {
             "Kernel\\": "src/"
