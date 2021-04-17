@@ -291,13 +291,23 @@ class Kernel
 
 
     /**
-     * Get the raw response
+     * Get the response object
      *
-     * @return mixed
+     * @return Response
      */
-    public function getRawResponse(string $method = null, string $path = null)
+    public function getResponse(string $method = null, string $path = null): Response
     {
-        return $this->router->dispatch($method, $path);
+        $response = $this->router->dispatch($method, $path);
+
+        if ($response instanceof JsonResponseEntity) {
+            $response = new JsonResponse($response, http_response_code());
+        }
+
+        if ($response instanceof Response === false) {
+            $response = new Response($response, http_response_code());
+        }
+
+        return $response;
     }
 
 
@@ -308,15 +318,7 @@ class Kernel
      */
     public function start(string $method = null, string $path = null): void
     {
-        $response = $this->getRawResponse($method, $path);
-
-        if ($response instanceof JsonResponseEntity) {
-            $response = new JsonResponse($response, http_response_code());
-        }
-
-        if ($response instanceof Response === false) {
-            $response = new Response($response, http_response_code());
-        }
+        $response = $this->getResponse($method, $path);
 
         $response->send();
     }
