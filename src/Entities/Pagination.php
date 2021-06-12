@@ -126,6 +126,8 @@ class Pagination extends Entity implements ArrayAccess, Countable, IteratorAggre
      */
     public function getIterator()
     {
-        return new ArrayIterator($this->items);
+        return new ArrayIterator(
+            $this->items ? $this->items->asArray() : []
+        );
     }
 }
