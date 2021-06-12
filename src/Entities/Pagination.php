@@ -77,7 +77,7 @@ class Pagination extends Entity implements ArrayAccess
      */
     public function offsetExists($offset)
     {
-        return array_key_exists($offset, $this->items);
+        return isset($this->items[$offset]);
     }
 
 
@@ -87,7 +87,7 @@ class Pagination extends Entity implements ArrayAccess
      */
     public function offsetUnset($offset)
     {
-        if (array_key_exists($offset, $this->items)) {
+        if (isset($this->items[$offset])) {
             unset($this->items[$offset]);
         }
     }
@@ -99,7 +99,7 @@ class Pagination extends Entity implements ArrayAccess
      */
     public function offsetGet($offset)
     {
-        return array_key_exists($offset, $this->items)
+        return isset($this->items[$offset])
             ? $this->items[$offset]
             : null;
     }
