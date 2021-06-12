@@ -4,7 +4,10 @@ declare(strict_types=1);
 namespace Kernel\Entities;
 
 use ArrayAccess;
+use ArrayIterator;
+use Countable;
 use Exception;
+use IteratorAggregate;
 use Maer\Entity\Collection;
 use Maer\Entity\Entity;
 
@@ -16,7 +19,7 @@ use Maer\Entity\Entity;
  * @property int $currentPage
  * @property array|Collection $items
  */
-class Pagination extends Entity implements ArrayAccess
+class Pagination extends Entity implements ArrayAccess, Countable, IteratorAggregate
 {
     protected int $total = 0;
     protected ?int $previous = null;
@@ -102,5 +105,27 @@ class Pagination extends Entity implements ArrayAccess
         return isset($this->items[$offset])
             ? $this->items[$offset]
             : null;
+    }
+
+
+    /**
+     * Get the current items count
+     *
+     * @return int
+     */
+    public function count() : int
+    {
+        return count($this->items);
+    }
+
+
+    /**
+     * Return the iterator
+     *
+     * @return ArrayIterator
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->items);
     }
 }
