@@ -14,6 +14,8 @@ return [
     'views' => [
         // Main view settings
         'path' => __DIR__ . '/views',
+        'folders' => [],
+        'extensions' => [],
     ],
 
     /**

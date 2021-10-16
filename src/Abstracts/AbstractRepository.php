@@ -116,9 +116,6 @@ abstract class AbstractRepository implements RepositoryInterface
         // Calculate how many pages there are
         $pages = $total ? ceil($total / $perPage) : 0;
 
-        // Calculate how many items to skip
-        $skip = ($page - 1) * $perPage;
-
         // Get the items for the requested page
         $items = $query->forPage($page, $perPage)->get();
 
@@ -127,7 +124,7 @@ abstract class AbstractRepository implements RepositoryInterface
             'previous'    => $page > 1 ? $page - 1 : null,
             'next'        => $page < $pages ? $page + 1 : null,
             'pages'       => $pages,
-            'currentPage' => $page > $perPage ? $perPage : $page,
+            'currentPage' => $page > $pages ? $pages : $page,
             'items'       => $this->resultIntoEntity($items),
         ]);
     }

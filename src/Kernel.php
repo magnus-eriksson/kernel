@@ -116,9 +116,17 @@ class Kernel
         /**
          * Views
          */
-        $this->ioc->singleton(Engine::class, function ($ioc): Engine {
+        $this->ioc->singleton(Engine::class, function (Container $ioc): Engine {
             $engine = new Engine($ioc->config->get('views.path'));
             $engine->loadExtension($ioc->make(Helpers::class));
+
+            foreach ($ioc->config->get('views.folders', []) as $name => $folder) {
+                $engine->addFolder($name, $folder);
+            }
+
+            foreach ($ioc->config->get('views.extensions', []) as $ext) {
+                $engine->loadExtension($ioc->make($ext));
+            }
 
             return $engine;
         });

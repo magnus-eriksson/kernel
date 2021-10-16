@@ -31,5 +31,36 @@ class Helpers implements ExtensionInterface
     {
         $engine->registerFunction('route', [$this->kernel->router, 'getRoute']);
         $engine->registerFunction('csrfToken', [$this->kernel->csrf, 'get']);
+        $engine->registerFunction('queryString', [$this, 'queryString']);
+    }
+
+
+    /**
+     * Get the current query string
+     *
+     * @param  array  $add
+     * @param  array  $remove
+     * @return string
+     */
+    public function queryString(array $add = [], array $remove = [])
+    {
+        $qs     = $this->kernel->request->server->get('QUERY_STRING');
+        $values = [];
+
+        if ($qs) {
+            parse_str($qs, $values);
+        }
+
+        foreach ($remove as $rmKey) {
+            if (array_key_exists($rmKey, $values)) {
+                unset($values[$rmKey]);
+            }
+        }
+
+        $values = array_replace($values, $add);
+
+        return $values
+            ? '?' . http_build_query($values)
+            : '';
     }
 }
