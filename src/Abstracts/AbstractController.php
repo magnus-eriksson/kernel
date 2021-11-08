@@ -9,7 +9,6 @@ use Kernel\Kernel;
 use Kernel\Routing\Router;
 use League\Plates\Engine;
 use Maer\Config\Config;
-use Maer\Validator\TestSuite;
 use Maer\Validator\Validator;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -109,11 +108,11 @@ abstract class AbstractController
      * @param array $data
      * @param array $rules
      *
-     * @return TestSuite
+     * @return Validator
      */
-    protected function validate(array $data, array $rules): TestSuite
+    protected function validate(array $data, array $rules): Validator
     {
-        return static::$kernel->validator->make($data, $rules);
+        return static::$kernel->validator->create($data, $rules);
     }
 
 
