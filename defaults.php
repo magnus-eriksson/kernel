@@ -40,7 +40,7 @@ return [
             'password'  => 'password',
             'charset'   => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
-            'lazy'      => false,
+            'lazy'      => true,
             'options'   => [
                 PDO::ATTR_EMULATE_PREPARES => false,
                 PDO::ATTR_ERRMODE          => PDO::ERRMODE_EXCEPTION,
