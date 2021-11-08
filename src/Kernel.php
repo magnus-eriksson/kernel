@@ -146,7 +146,7 @@ class Kernel
 
             return $factory;
         });
-        $this->ioc->alias(Factory::class, 'validator');
+        $this->ioc->alias(ValidationFactory::class, 'validator');
 
         /**
          * Database
