@@ -137,13 +137,6 @@ class Kernel
          */
         $this->ioc->singleton(ValidationFactory::class, function ($ioc): ValidationFactory {
             $factory = new ValidationFactory;
-
-            /**
-             * @var Connection
-             */
-            $db = $ioc->db;
-            $factory->registerSet(new DatabaseSet($db));
-
             return $factory;
         });
         $this->ioc->alias(ValidationFactory::class, 'validator');
