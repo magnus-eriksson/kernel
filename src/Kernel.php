@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Kernel;
 
-use Closure;
 use Database\Connection;
 use Database\Connectors\ConnectionFactory;
 use Illuminate\Container\Container;
@@ -12,10 +11,11 @@ use Kernel\Entities\JsonResponseEntity;
 use Kernel\Routing\Router;
 use Kernel\Security\Csrf;
 use Kernel\Utils\Slugify;
+use Kernel\Validators\DatabaseSet;
 use Kernel\Views\Helpers;
 use League\Plates\Engine;
 use Maer\Config\Config;
-use Maer\Validator\TestSuite;
+use Maer\Validator\Factory as ValidationFactory;
 use Maer\Validator\Validator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -30,7 +30,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
  * @property Request $request
  * @property Session $session
  * @property Engine $views
- * @property Validator $validator
+ * @property Factory $validator
  * @property Connection $db
  * @property Slugify $slugify
  * @property Csrf $csrf
@@ -135,8 +135,18 @@ class Kernel
         /**
          * Validation
          */
-        $this->ioc->singleton(Validator::class, fn (): Validator => new Validator);
-        $this->ioc->alias(Validator::class, 'validator');
+        $this->ioc->singleton(ValidationFactory::class, function ($ioc): ValidationFactory {
+            $factory = new ValidationFactory;
+
+            /**
+             * @var Connection
+             */
+            $db = $ioc->db;
+            $factory->registerSet(new DatabaseSet($db));
+
+            return $factory;
+        });
+        $this->ioc->alias(Factory::class, 'validator');
 
         /**
          * Database
@@ -289,12 +299,13 @@ class Kernel
      *
      * @param array $data
      * @param array $rules
+     * @param array $fieldMessages Custom field messages
      *
-     * @return TestSuite
+     * @return Validator
      */
-    public function validate(array $data, array $rules): TestSuite
+    public function validate(array $data, array $rules, array $fieldMessages = []): Validator
     {
-        return $this->validator->make($data, $rules);
+        return $this->validator->create($data, $rules, $fieldMessages);
     }
 
 
