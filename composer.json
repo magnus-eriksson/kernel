@@ -16,10 +16,10 @@
         "symfony/http-foundation": "^5.1",
         "illuminate/container": "^8.13",
         "league/plates": "^3.3",
-        "maer/validator": "^2.0",
         "mrjgreen/database": "^2.5",
         "maer/entity": "^2.0",
-        "cocur/slugify": "^4.0"
+        "cocur/slugify": "^4.0",
+        "rakit/validation": "^1.4"
     },
     "autoload": {
         "psr-4": {

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 namespace Kernel;
 
@@ -10,13 +9,13 @@ use Kernel\Abstracts\AbstractController;
 use Kernel\Entities\JsonResponseEntity;
 use Kernel\Routing\Router;
 use Kernel\Security\Csrf;
+use Kernel\Utils\Paths;
 use Kernel\Utils\Slugify;
-use Kernel\Validators\DatabaseSet;
 use Kernel\Views\Helpers;
 use League\Plates\Engine;
 use Maer\Config\Config;
-use Maer\Validator\Factory as ValidationFactory;
-use Maer\Validator\Validator;
+use Rakit\Validation\Validation;
+use Rakit\Validation\Validator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,10 +29,11 @@ use Symfony\Component\HttpFoundation\Session\Session;
  * @property Request $request
  * @property Session $session
  * @property Engine $views
- * @property Factory $validator
+ * @property Validator $validator
  * @property Connection $db
  * @property Slugify $slugify
  * @property Csrf $csrf
+ * @property Paths $paths
  */
 class Kernel
 {
@@ -59,6 +59,13 @@ class Kernel
          * Kernel
          */
         $this->ioc->singleton(Kernel::class, fn (): Kernel => $this);
+
+
+        /**
+         * Paths
+         */
+        $this->ioc->singleton(Paths::class, fn (): Paths => new Paths);
+        $this->ioc->alias(Paths::class, 'paths');
 
         /**
          * Config
@@ -135,11 +142,10 @@ class Kernel
         /**
          * Validation
          */
-        $this->ioc->singleton(ValidationFactory::class, function ($ioc): ValidationFactory {
-            $factory = new ValidationFactory;
-            return $factory;
+        $this->ioc->singleton(Validator::class, function ($ioc): Validator {
+            return new Validator();
         });
-        $this->ioc->alias(ValidationFactory::class, 'validator');
+        $this->ioc->alias(Validator::class, 'validator');
 
         /**
          * Database
@@ -180,6 +186,21 @@ class Kernel
     public function config($key = null, $fallback = null)
     {
         return $this->config->get($key, $fallback);
+    }
+
+
+    /**
+     * Get the paths instance or a specific path
+     *
+     * @param string|null $key
+     *
+     * @return Paths|string|null
+     */
+    public function paths(?string $key = null): Paths|string|null
+    {
+        return $key
+            ? $this->paths->get($key)
+            : $this->paths;
     }
 
 
@@ -292,13 +313,12 @@ class Kernel
      *
      * @param array $data
      * @param array $rules
-     * @param array $fieldMessages Custom field messages
      *
-     * @return Validator
+     * @return Validation
      */
-    public function validate(array $data, array $rules, array $fieldMessages = []): Validator
+    public function validate(array $data, array $rules): Validation
     {
-        return $this->validator->create($data, $rules, $fieldMessages);
+        return $this->validator->make($data, $rules);
     }
 
 
