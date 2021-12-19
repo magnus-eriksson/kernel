@@ -68,6 +68,7 @@ class Pagination extends Entity implements ArrayAccess, Countable, IteratorAggre
      * @param mixed $value
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         throw new Exception("The pagination object is read-only");
@@ -78,6 +79,7 @@ class Pagination extends Entity implements ArrayAccess, Countable, IteratorAggre
      * @param mixed $offset
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return isset($this->items[$offset]);
@@ -88,6 +90,7 @@ class Pagination extends Entity implements ArrayAccess, Countable, IteratorAggre
      * @param mixed $offset
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         if (isset($this->items[$offset])) {
@@ -100,6 +103,7 @@ class Pagination extends Entity implements ArrayAccess, Countable, IteratorAggre
      * @param mixed $offset
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return isset($this->items[$offset])
@@ -124,6 +128,7 @@ class Pagination extends Entity implements ArrayAccess, Countable, IteratorAggre
      *
      * @return ArrayIterator
      */
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return new ArrayIterator(
