@@ -14,8 +14,8 @@ use Kernel\Utils\Slugify;
 use Kernel\Views\Helpers;
 use League\Plates\Engine;
 use Maer\Config\Config;
-use Rakit\Validation\Validation;
-use Rakit\Validation\Validator;
+use Maer\Validator\TestSuite;
+use Maer\Validator\Validator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -314,9 +314,9 @@ class Kernel
      * @param array $data
      * @param array $rules
      *
-     * @return Validation
+     * @return TestSuite
      */
-    public function validate(array $data, array $rules): Validation
+    public function validate(array $data, array $rules): TestSuite
     {
         return $this->validator->make($data, $rules);
     }
