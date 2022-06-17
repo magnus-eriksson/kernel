@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Kernel\Abstracts;
@@ -268,15 +269,14 @@ abstract class AbstractRepository implements RepositoryInterface
     /**
      * Convert results into entities
      *
-     * @param mixed $result
-     * @param bool $asCollection
+     * @param array|null $result
      *
-     * @return void
+     * @return array|null|Collection|AbstractEntity
      */
-    protected function resultIntoEntity($result, bool $asCollection = false)
+    protected function resultIntoEntity($result): Collection|AbstractEntity|null
     {
         if ($this->entity === null || empty($result)) {
-            return $asCollection ? new Collection : null;
+            return is_array($result) ? new Collection : null;
         }
 
         return $this->entity::make($result);
