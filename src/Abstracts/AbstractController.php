@@ -4,16 +4,14 @@ declare(strict_types=1);
 
 namespace Kernel\Abstracts;
 
-use Kernel\Kernel;
-use Maer\Config\Config;
-use League\Plates\Engine;
-use Kernel\Routing\Router;
-use Rakit\Validation\Validator;
-use Rakit\Validation\Validation;
 use Illuminate\Container\Container;
 use Kernel\Entities\JsonResponseEntity;
-use Symfony\Component\HttpFoundation\Request;
+use Kernel\Kernel;
+use Kernel\Routing\Router;
+use League\Plates\Engine;
+use Maer\Config\Config;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @property Container $ioc
@@ -21,7 +19,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * @property Router $router
  * @property Request $request
  * @property Engine $views
- * @property Validator $validator
  */
 abstract class AbstractController
 {
@@ -101,20 +98,6 @@ abstract class AbstractController
     protected function render(string $template, array $data = []): string
     {
         return static::$kernel->render($template, $data);
-    }
-
-
-    /**
-     * Validate data
-     *
-     * @param array $data
-     * @param array $rules
-     *
-     * @return Validation
-     */
-    protected function validate(array $data, array $rules): Validation
-    {
-        return static::$kernel->validator->make($data, $rules);
     }
 
 

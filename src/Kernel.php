@@ -14,8 +14,6 @@ use Kernel\Utils\Slugify;
 use Kernel\Views\Helpers;
 use League\Plates\Engine;
 use Maer\Config\Config;
-use Maer\Validator\TestSuite;
-use Maer\Validator\Validator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,7 +27,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
  * @property Request $request
  * @property Session $session
  * @property Engine $views
- * @property Validator $validator
  * @property Connection $db
  * @property Slugify $slugify
  * @property Csrf $csrf
@@ -138,14 +135,6 @@ class Kernel
             return $engine;
         });
         $this->ioc->alias(Engine::class, 'views');
-
-        /**
-         * Validation
-         */
-        $this->ioc->singleton(Validator::class, function ($ioc): Validator {
-            return new Validator();
-        });
-        $this->ioc->alias(Validator::class, 'validator');
 
         /**
          * Database
@@ -305,20 +294,6 @@ class Kernel
     public function render(string $template, array $data = []): string
     {
         return $this->views->render($template, $data);
-    }
-
-
-    /**
-     * Validate data
-     *
-     * @param array $data
-     * @param array $rules
-     *
-     * @return TestSuite
-     */
-    public function validate(array $data, array $rules): TestSuite
-    {
-        return $this->validator->make($data, $rules);
     }
 
 
