@@ -4,15 +4,22 @@ declare(strict_types=1);
 
 namespace Kernel\Abstracts;
 
+use Database\Connection;
 use Illuminate\Container\Container;
+use Jsl\Ensure\Components\Result;
+use Jsl\Ensure\Ensure;
 use Jsl\Ensure\EnsureFactory;
 use Kernel\Entities\JsonResponseEntity;
 use Kernel\Kernel;
 use Kernel\Routing\Router;
+use Kernel\Security\Csrf;
+use Kernel\Utils\Paths;
+use Kernel\Utils\Slugify;
 use League\Plates\Engine;
 use Maer\Config\Config;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * @property Container $ioc
@@ -116,6 +123,49 @@ abstract class AbstractController
     protected function jsonResponseEntity(): JsonResponseEntity
     {
         return new JsonResponseEntity;
+    }
+
+
+    /**
+     * Add a flash message
+     *
+     * @param string $key
+     * @param string $message
+     *
+     * @return self
+     */
+    protected function addFlash(string $key, string $message): self
+    {
+        $this->session->getFlashBag()->add($key, $message);
+
+        return $this;
+    }
+
+
+    /**
+     * Get flash messages
+     *
+     * @param string $key
+     * 
+     * @return array
+     */
+    protected function getFlash(string $key): array
+    {
+        return $this->session->getFlashBag()->get($key, []);
+    }
+
+
+    /**
+     * Create a new Ensure validation instance
+     *
+     * @param array $data
+     * @param string|array $rules
+     *
+     * @return Ensure
+     */
+    public function ensure(array $data, string|array $rules = []): Ensure
+    {
+        return $this->ensure->create($data, $rules);
     }
 
 
