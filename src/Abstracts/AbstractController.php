@@ -19,7 +19,12 @@ use Symfony\Component\HttpFoundation\Request;
  * @property Config $config
  * @property Router $router
  * @property Request $request
+ * @property Session $session
  * @property Engine $views
+ * @property Connection $db
+ * @property Slugify $slugify
+ * @property Csrf $csrf
+ * @property Paths $paths
  * @property EnsureFactory $ensure
  */
 abstract class AbstractController
