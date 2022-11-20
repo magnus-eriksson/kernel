@@ -5,12 +5,14 @@ namespace Kernel;
 use Database\Connection;
 use Database\Connectors\ConnectionFactory;
 use Illuminate\Container\Container;
+use Jsl\Ensure\EnsureFactory;
 use Kernel\Abstracts\AbstractController;
 use Kernel\Entities\JsonResponseEntity;
 use Kernel\Routing\Router;
 use Kernel\Security\Csrf;
 use Kernel\Utils\Paths;
 use Kernel\Utils\Slugify;
+use Kernel\Validation\Resolver;
 use Kernel\Views\Helpers;
 use League\Plates\Engine;
 use Maer\Config\Config;
@@ -31,6 +33,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
  * @property Slugify $slugify
  * @property Csrf $csrf
  * @property Paths $paths
+ * @property EnsureFactory $ensure
  */
 class Kernel
 {
@@ -161,6 +164,23 @@ class Kernel
          */
         $this->ioc->singleton(Csrf::class, fn () => new Csrf($this->session));
         $this->ioc->alias(Csrf::class, 'csrf');
+
+        /**
+         * Ensure - Validation
+         */
+        $this->ioc->singleton(EnsureFactory::class, function ($ioc) {
+            $factory = (new EnsureFactory())
+                ->setValidatorResolver(new Resolver($ioc));
+
+            $factory->addManyValidators($this->config('ensure.validators', []));
+
+            foreach ($this->config('ensure.rulesets', []) as $name => $ruleset) {
+                $factory->addRuleset($name, $ruleset);
+            }
+
+            return $factory;
+        });
+        $this->ioc->alias(EnsureFactory::class, 'ensure');
     }
 
 

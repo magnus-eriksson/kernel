@@ -19,7 +19,7 @@
         "mrjgreen/database": "^2.5",
         "maer/entity": "^2.0",
         "cocur/slugify": "^4.0",
-        "maer/validator": "^1.0"
+        "jsl/ensure": "0.2.*"
     },
     "autoload": {
         "psr-4": {

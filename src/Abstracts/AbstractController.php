@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kernel\Abstracts;
 
 use Illuminate\Container\Container;
+use Jsl\Ensure\EnsureFactory;
 use Kernel\Entities\JsonResponseEntity;
 use Kernel\Kernel;
 use Kernel\Routing\Router;
@@ -19,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @property Router $router
  * @property Request $request
  * @property Engine $views
+ * @property EnsureFactory $ensure
  */
 abstract class AbstractController
 {
