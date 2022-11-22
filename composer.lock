@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "72eec0b2af290738b6f7cb668e3daa86",
+    "content-hash": "a84a489e427ad29dd4daf8c3cf985afe",
     "packages": [
         {
             "name": "cocur/slugify",
@@ -181,16 +181,16 @@
         },
         {
             "name": "jsl/ensure",
-            "version": "0.2.0",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jslphp/ensure.git",
-                "reference": "88fecd014086ac09337ccf727f67822b2a735d29"
+                "reference": "a96d19d4b87ec5f8571d83cb4061049b97ff4e30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jslphp/ensure/zipball/88fecd014086ac09337ccf727f67822b2a735d29",
-                "reference": "88fecd014086ac09337ccf727f67822b2a735d29",
+                "url": "https://api.github.com/repos/jslphp/ensure/zipball/a96d19d4b87ec5f8571d83cb4061049b97ff4e30",
+                "reference": "a96d19d4b87ec5f8571d83cb4061049b97ff4e30",
                 "shasum": ""
             },
             "type": "library",
@@ -212,9 +212,9 @@
             "description": "Validation library",
             "support": {
                 "issues": "https://github.com/jslphp/ensure/issues",
-                "source": "https://github.com/jslphp/ensure/tree/0.2.0"
+                "source": "https://github.com/jslphp/ensure/tree/0.3.0"
             },
-            "time": "2022-11-15T01:15:43+00:00"
+            "time": "2022-11-22T00:30:15+00:00"
         },
         {
             "name": "league/plates",

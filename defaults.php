@@ -47,4 +47,10 @@ return [
             ]
         ],
     ],
+
+    // Validation
+    'ensure' => [
+        'rulesets' => [],
+        'validators' => [],
+    ],
 ];

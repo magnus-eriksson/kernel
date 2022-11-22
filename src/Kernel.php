@@ -60,7 +60,6 @@ class Kernel
          */
         $this->ioc->singleton(Kernel::class, fn (): Kernel => $this);
 
-
         /**
          * Paths
          */
@@ -170,9 +169,9 @@ class Kernel
          */
         $this->ioc->singleton(EnsureFactory::class, function ($ioc) {
             $factory = (new EnsureFactory())
-                ->setValidatorResolver(new Resolver($ioc));
+                ->setClassResolver(fn ($className) => $ioc->make($className));
 
-            $factory->addManyValidators($this->config('ensure.validators', []));
+            $factory->addValidators($this->config('ensure.validators', []));
 
             foreach ($this->config('ensure.rulesets', []) as $name => $ruleset) {
                 $factory->addRuleset($name, $ruleset);
