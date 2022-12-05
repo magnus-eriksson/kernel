@@ -1,4 +1,5 @@
 <?php
+
 namespace Kernel\Security;
 
 use Symfony\Component\HttpFoundation\Session\Session;

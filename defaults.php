@@ -53,4 +53,20 @@ return [
         'rulesets' => [],
         'validators' => [],
     ],
+
+    'forms' => [
+        /*
+        // Form name/identifier
+        'someName' => [
+            'csrf' => 'nameOfCsrfField', // Set to null, or omit it to disable CSRF
+            'fields' => [
+                // List of form fields that are allowed and fetched from the request
+                'someField' => [
+                    'rules' => [], // Ensure rules
+                    'error' => 'The title is required and must be at least 2 characters', // Validation error message
+                ],
+                'anotherField => null, // Set to null to disable validation but allow the field
+            ],
+        ],
+        */],
 ];
