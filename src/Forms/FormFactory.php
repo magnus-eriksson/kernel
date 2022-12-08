@@ -4,7 +4,6 @@ namespace Kernel\Forms;
 
 use InvalidArgumentException;
 use Jsl\Ensure\EnsureFactory;
-use Kernel\Security\Csrf;
 use Maer\Config\ConfigInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,24 +24,17 @@ class FormFactory
      */
     protected Request $request;
 
-    /**
-     * @var Csrf
-     */
-    protected Csrf $csrf;
-
 
     /**
      * @param EnsureFactory $ensure
      * @param ConfigInterface $config
      * @param Request $request
-     * @param Csrf $csrf
      */
-    public function __construct(EnsureFactory $ensure, ConfigInterface $config, Request $request, Csrf $csrf)
+    public function __construct(EnsureFactory $ensure, ConfigInterface $config, Request $request)
     {
         $this->ensure = $ensure;
         $this->config = $config;
         $this->request = $request;
-        $this->csrf = $csrf;
     }
 
 
@@ -88,14 +80,6 @@ class FormFactory
                 $ensure->setFieldTemplate($field, $info['error']);
             }
         }
-
-        // If we have a CSRF field name, let's use it
-        if (isset($config['csrf']) && $config['csrf']) {
-            $data[$config['csrf']] = $request->get($config['csrf'], '');
-            $ensure->setFieldRule($config['csrf'], 'in', $this->csrf->get($config['csrf']))
-                ->setFieldTemplate($config['csrf'], 'The form has expired. Reload the page and try again.');
-        }
-
 
         return new Form($data, $ensure);
     }

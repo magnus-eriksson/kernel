@@ -171,6 +171,11 @@ class Kernel
             $factory = (new EnsureFactory())
                 ->setClassResolver(fn ($className) => $ioc->make($className));
 
+            // Add CSRF validation
+            $factory->addValidator('csrf', function (mixed $token, mixed $name) use ($ioc) {
+                return !empty($value) && $ioc->csrf->match($name, $token);
+            }, 'The request has expired. Reload page and try again.');
+
             $factory->addValidators($this->config('ensure.validators', []));
 
             foreach ($this->config('ensure.rulesets', []) as $name => $ruleset) {

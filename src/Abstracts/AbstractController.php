@@ -165,7 +165,7 @@ abstract class AbstractController
      */
     public function ensure(array $data, string|array $rules = []): Ensure
     {
-        return $this->ensure->create($data, $rules);
+        return $this->ensure->create($rules, $data);
     }
 
 
