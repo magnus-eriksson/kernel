@@ -10,6 +10,8 @@ use Jsl\Ensure\Components\Result;
 use Jsl\Ensure\Ensure;
 use Jsl\Ensure\EnsureFactory;
 use Kernel\Entities\JsonResponseEntity;
+use Kernel\Forms\Form;
+use Kernel\Forms\FormFactory;
 use Kernel\Kernel;
 use Kernel\Routing\Router;
 use Kernel\Security\Csrf;
@@ -33,6 +35,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
  * @property Csrf $csrf
  * @property Paths $paths
  * @property EnsureFactory $ensure
+ * @property FormFactory $forms
  */
 abstract class AbstractController
 {
@@ -167,6 +170,21 @@ abstract class AbstractController
     {
         return $this->ensure->create($rules, $data);
     }
+
+
+    /**
+     * Get a form instance
+     *
+     * @param string $name
+     * @param string $method
+     *
+     * @return Form
+     */
+    public function form(string $name, string $method = 'POST'): Form
+    {
+        return $this->forms->form($name, $method);
+    }
+
 
 
     /**

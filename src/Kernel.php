@@ -8,6 +8,7 @@ use Illuminate\Container\Container;
 use Jsl\Ensure\EnsureFactory;
 use Kernel\Abstracts\AbstractController;
 use Kernel\Entities\JsonResponseEntity;
+use Kernel\Forms\FormFactory;
 use Kernel\Routing\Router;
 use Kernel\Security\Csrf;
 use Kernel\Utils\Paths;
@@ -185,6 +186,14 @@ class Kernel
             return $factory;
         });
         $this->ioc->alias(EnsureFactory::class, 'ensure');
+
+        /**
+         * Forms
+         */
+        $this->ioc->singleton(FormFactory::class, function (Container $ioc) {
+            return new FormFactory($ioc->ensure, $ioc->config, $ioc->request);
+        });
+        $this->ioc->alias(FormFactory::class, 'forms');
     }
 
 
